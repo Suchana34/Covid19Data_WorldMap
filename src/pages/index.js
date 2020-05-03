@@ -31,7 +31,32 @@ const IndexPage = () => {
     }
     //destructure data from the response and set the default value to an empty array, as that will be the type of data we need
     const { data = []} = res;
-    console.log(data);
+    
+
+    const isdata = Array.isArray(data) && data.length>0;
+
+    if(!isdata)
+      return;
+    
+    else{
+      const geoJson = {
+        type: 'FeatureCollection',
+        features: data.map((country={})=>{
+          const {countryProps = {}} = country
+          const {lat, long:lng} = countryProps
+          return{
+            type: 'Feature',
+            properties: {
+              ...country,
+            },
+            geometry:{
+              type: 'point',
+              coordinates: [lng, lat]
+            }
+          }
+        })
+      }
+    }
   }
 
   const mapSettings = {
