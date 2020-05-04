@@ -6,7 +6,7 @@ import { mapServices } from 'data/map-services';
  */
 
 export function getMapServices() {
-  return mapServices || [];
+  return mapServices;
 }
 
 /**
